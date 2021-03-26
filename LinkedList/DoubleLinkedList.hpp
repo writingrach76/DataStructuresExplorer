@@ -1,37 +1,38 @@
-#ifndef _LinkedList_HPP
-#define _LinkedList_HPP
+#ifndef _DoubleLinkedList_HPP
+#define _DoubleLinkedList_HPP
 
-#include "Node.hpp"
-/*
-* This is an implementation of a simple linked list, which
-* can only be navigated starting from the head and through
-* each node to the end. 
-*/
+#include "DoubleNode.hpp";
 template <typename Data>
-class LinkedList 
+class DoubleLinkedList
 {
     private:
-    Node<Data>* _head; //the beginning of the list
-    int _size; //number of elements in the list
+        DoubleNode<Data>* _head;
+        DoubleNode<Data>* _tail;
+        int _size;
 
     public:
-    /*
-    * Initialize the list as null so that an empty list can exist
-    * and initialize size as 0 for this
-    */
-    LinkedList()
+    DoubleLinkedList()
     {
         _head = NULL;
+        _tail = NULL;
         _size = 0;
+    }
+
+    ~DoubleLinkedList()
+    {
+        if(_head != NULL)
+            delete _head;
+        if(_tail != NULL)
+            delete _tail;
     }
 
     public:
     /*
-    * inserts a node at the beginning of the list
+    * This inserts an element into the beginning of the list
     */
-    void insert(Data d)
+    Node<Data>* insert(Data d)
     {
-        Node<Data>* node = new Node<Data>(d, NULL);
+        Node<Data>* node = new Node<Data>(d, NULL, NULL);
         if(_head == NULL) //empty list therefore this is head
         {
             _head = node;
@@ -41,43 +42,40 @@ class LinkedList
             Node<Data>* temp = _head;
             _head = node;
             _head->_next = temp;
+            _head->_next->_previous = _head;
         }
         else //more than 2 elements so adding to the beginning 
         {
             Node<Data>* temp = _head;
             _head = node;
             _head->_next = temp;
+            _head->_next->_previous = _head;
 
-            /*
-            Node<Data>* temp = _head->_next;
-            _head->_next = node;
-            _head->_next->_next = temp;
-            */
         }
         _size++;
+        return node;
     }
 
-    /*
-    * This will delete an element from the beginning of the list
-    */
-    void deleteElm()
+     Node<Data>* addEnd(Data d)
+     {
+
+     }
+
+     void deleteElmF()
+     {
+
+     }
+
+     void deleteElmE()
+     {
+
+     }
+
+    DoubleLinkedList reverse()
     {
-        if(_head != NULL) //List is not empty and an element can be removed
-        {
-            if(_head->_next == NULL) //only one element in the list
-            {
-                _head = NULL;
-            }
-            else //more than one element in the list
-            {
-                Node<Data>* temp = _head->_next;
-                _head = temp;
-            }
-            _size--;
-        }
     }
 
-    /*
+     /*
     * This will return the number of Nodes currently in the list
     */
     int getSize()
@@ -138,24 +136,6 @@ class LinkedList
             temp->displayNode();
             temp = temp->_next;
         }
-    }
-
-    /*
-    * Reverses the list
-    */
-    LinkedList* reverse()
-    {
-        LinkedList* list = new LinkedList();
-        helpReverse(_head, list);
-        return list;
-    }
-
-    void helpReverse(Node<Data>* temp, LinkedList* list)
-    {
-        if(temp->_next == NULL)
-            list->insert(temp->getData());
-        else
-            list->insert(helpReverse(temp->_next, list).getData());
     }
 
 };

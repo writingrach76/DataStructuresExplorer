@@ -2,8 +2,13 @@
 #define _NODE_HPP
 #include <iostream>
 using namespace std;
-template <typename Data>
 
+/*
+* This is a Node designed for a simple linked list and other single direction data
+* structures
+*/
+
+template <typename Data>
 class Node
 {
     private: 
@@ -22,6 +27,12 @@ class Node
     {
         _data = d;
         _next = link;
+    }
+
+    ~Node()
+    {
+        if(_next != NULL)
+            delete _next;
     }
 
     public:
@@ -59,6 +70,9 @@ class Node
         cout << _data << endl;
     }
 
+    /*
+    * Returns the data in the method
+    */
      Data getData()
     {
         return _data;
