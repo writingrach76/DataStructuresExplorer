@@ -99,15 +99,18 @@ class SimpleLinkedList
     */
     void deleteElmF()
     {
+        Node<Data> toReturn;
         if(_head != NULL) //List is not empty and an element can be removed
         {
             if(_head->_next == NULL) //only one element in the list
             {
+                toReturn = _head;
                 delete _head;
                 _head = NULL;
             }
             else //more than one element in the list
             {
+                toReturn = _head;
                 Node<Data>* temp = _head->_next;
                 _head->_next = NULL;
                 delete _head;
@@ -116,6 +119,7 @@ class SimpleLinkedList
             }
             _size--;
         }
+        return toReturn;
     }
 
     /*
